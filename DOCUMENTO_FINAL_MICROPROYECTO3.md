@@ -241,15 +241,20 @@ Al ingresar por primera vez a [ml.azure.com](https://ml.azure.com) sin un área 
    * **Curva ROC / AUC:** Valor superior a **0.78**.
    * **Matriz de Confusión:** Precisión global superior al **75%**.
 
-#### Paso 5: Generación del Endpoint de Inferencia
-1. En la barra superior del pipeline completado, hacer clic en **Create inference pipeline** > **Real-time inference pipeline**.
-2. El diseñador conectará automáticamente los módulos `Web Service Input` y `Web Service Output`.
-3. Hacer clic en **Submit** para compilar la versión de inferencia.
-4. Una vez terminada, hacer clic en el botón azul **Deploy**:
-   * *Deployment type:* **Deploy a new real-time endpoint**.
-   * *Endpoint name:* `endpoint-credit-risk`
-   * *Compute type:* `Managed` con VM `Standard_DS2_v2`.
-5. Esperar aproximadamente 5 a 8 minutos mientras el contenedor se aprovisiona.
+#### Paso 5: Despliegue del Punto de Conexión (Pipeline Endpoint)
+1. En la canalización de entrenamiento completada, hacer clic en **Crear canalización de inferencia** > **Canalización de inferencia en tiempo real**.
+2. Azure genera automáticamente el borrador con `Trained model`, `Apply Transformation` y `Web Service Output`.
+3. Hacer clic en **Configurar y enviar**:
+   * Usar el experimento existente: `exp-credit-risk` y clúster: `cluster-credit-risk` -> Clic en **Enviar**.
+4. Al finalizar la ejecución con estado **✔️ Completado**:
+   * En la barra superior de herramientas, hacer clic en el botón con ícono de nube: **`Publicar`** (*Publish*).
+   * En la ventana emergente *Configuración de una canalización publicada*:
+     * Seleccionar: **Crear nuevo**.
+     * **Nombre de nuevo PipelineEndpoint:** `endpoint-credit-risk`.
+     * **Descripción:** `Servicio REST de inferencia en tiempo real para evaluación de riesgo crediticio.`
+     * Mantener marcadas las casillas de canalización predeterminada.
+     * Hacer clic en el botón azul **Publicar** (*Publish*).
+5. El punto de conexión quedará activo y visible en el menú lateral izquierdo bajo **Recursos** > **Puntos de conexión** > pestaña **Puntos de conexión de canalización** (*Pipeline endpoints*), listo con su **Dirección URL de REST** para ser consumido.
 
 ---
 

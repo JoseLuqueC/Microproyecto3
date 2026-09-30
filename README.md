@@ -108,11 +108,20 @@ En el menú lateral izquierdo:
    * **Paso 4 (Revisar y enviar):** Verificar el resumen y hacer clic en el botón azul **Enviar** (*Submit*).
    * El entrenamiento tomará entre 3 y 5 minutos. El clúster encenderá 1 nodo, ejecutará todos los pasos y al finalizar volverá a 0 nodos automáticamente.
 
-#### Paso 4: Despliegue del Punto de Conexión (Endpoint)
-1. En la parte superior de la canalización completada, hacer clic en **Crear canalización de inferencia** > **Canalización de inferencia en tiempo real** -> **Enviar**.
-2. Al finalizar, hacer clic en **Implementar** (*Deploy*):
-   * **Nombre:** `endpoint-credit-risk`
-   * **Tipo de proceso:** `Administrado` (*Managed*) con VM `Standard_DS2_v2`.
+#### Paso 4: Despliegue del Punto de Conexión (Pipeline Endpoint)
+1. En la canalización de entrenamiento completada, hacer clic en **Crear canalización de inferencia** > **Canalización de inferencia en tiempo real**.
+2. Azure genera automáticamente el borrador con `Trained model`, `Apply Transformation` y `Web Service Output`.
+3. Hacer clic en **Configurar y enviar**:
+   * Usar el experimento existente: `exp-credit-risk` y clúster: `cluster-credit-risk` -> Clic en **Enviar**.
+4. Al finalizar la ejecución con estado **✔️ Completado**:
+   * En la barra superior de herramientas, hacer clic en el botón con ícono de nube: **`Publicar`** (*Publish*).
+   * En la ventana emergente *Configuración de una canalización publicada*:
+     * Seleccionar: **Crear nuevo**.
+     * **Nombre de nuevo PipelineEndpoint:** `endpoint-credit-risk`.
+     * **Descripción:** `Servicio REST de inferencia en tiempo real para evaluación de riesgo crediticio.`
+     * Mantener marcadas las casillas de canalización predeterminada.
+     * Hacer clic en el botón azul **Publicar** (*Publish*).
+5. El punto de conexión quedará activo y visible en el menú lateral izquierdo bajo **Recursos** > **Puntos de conexión** > pestaña **Puntos de conexión de canalización** (*Pipeline endpoints*), listo con su **Dirección URL de REST** para ser consumido.
 
 ### 3. Probar el DEMO
 Una vez desplegado el endpoint, se puede probar desde la pestaña **Test** de Azure ML Studio o ejecutando:
