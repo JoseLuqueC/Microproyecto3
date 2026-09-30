@@ -1,0 +1,28 @@
+{
+  "Inputs": {
+    "data": [
+      {
+        "CheckingAccount": "<0 DM",
+        "DurationMonths": 48,
+        "CreditHistory": "delay in past",
+        "Purpose": "business",
+        "CreditAmount": 9500,
+        "SavingsAccount": "<100 DM",
+        "EmploymentDuration": "<1 year",
+        "InstallmentRate": 4,
+        "PersonalStatusSex": "female_divorced/separated/married",
+        "OtherDebtors": "none",
+        "PresentResidenceSince": 1,
+        "Property": "unknown/no_property",
+        "Age": 21,
+        "OtherInstallmentPlans": "bank",
+        "Housing": "rent",
+        "ExistingCredits": 2,
+        "Job": "unemployed/unskilled_non-resident",
+        "NumberDependents": 2,
+        "Telephone": "none",
+        "ForeignWorker": "yes"
+      }
+    ]
+  }
+}

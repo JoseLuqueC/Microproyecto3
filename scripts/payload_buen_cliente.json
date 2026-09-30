@@ -1,0 +1,28 @@
+{
+  "Inputs": {
+    "data": [
+      {
+        "CheckingAccount": ">=200 DM",
+        "DurationMonths": 12,
+        "CreditHistory": "existing credits paid duly",
+        "Purpose": "car_new",
+        "CreditAmount": 1500,
+        "SavingsAccount": ">=1000 DM",
+        "EmploymentDuration": ">=7 years",
+        "InstallmentRate": 2,
+        "PersonalStatusSex": "male_single",
+        "OtherDebtors": "none",
+        "PresentResidenceSince": 4,
+        "Property": "real_estate",
+        "Age": 45,
+        "OtherInstallmentPlans": "none",
+        "Housing": "own",
+        "ExistingCredits": 1,
+        "Job": "skilled_employee",
+        "NumberDependents": 1,
+        "Telephone": "yes",
+        "ForeignWorker": "no"
+      }
+    ]
+  }
+}
