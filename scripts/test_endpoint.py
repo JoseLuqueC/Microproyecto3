@@ -9,8 +9,24 @@ import subprocess
 import os
 import sys
 
-# URL del Endpoint REST publicado en Azure ML
-ENDPOINT_URL = "https://westus.api.azureml.ms/pipelines/v1.0/subscriptions/c7fc4381-3a81-4d53-8d8d-c69a2fafe363/resourceGroups/rg-credit-risk-westus/providers/Microsoft.MachineLearningServices/workspaces/mlw-credit-risk/PipelineRuns/PipelineEndpointSubmit/Id/35bab4f9-c84a-4a17-9f53-18869dbadaca"
+# Intentar cargar variable desde archivo .env local si existe
+def cargar_env():
+    env_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".env")
+    if os.path.exists(env_path):
+        with open(env_path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith("#") and "=" in line:
+                    key, val = line.split("=", 1)
+                    os.environ.setdefault(key.strip(), val.strip())
+
+cargar_env()
+
+# URL del Endpoint REST parametrizada via variable de entorno o .env
+ENDPOINT_URL = os.environ.get(
+    "AZURE_ML_ENDPOINT_URL",
+    "https://<REGION>.api.azureml.ms/pipelines/v1.0/subscriptions/<SUBSCRIPTION_ID>/resourceGroups/<RESOURCE_GROUP>/providers/Microsoft.MachineLearningServices/workspaces/<WORKSPACE>/PipelineRuns/PipelineEndpointSubmit/Id/<ENDPOINT_ID>"
+)
 
 def obtener_token_azure():
     """Obtiene el token de autenticacion de Azure mediante Azure CLI"""
