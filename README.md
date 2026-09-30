@@ -48,13 +48,19 @@ Si al ingresar a [ml.azure.com](https://ml.azure.com) ves la pantalla de bienven
 
 #### Paso 1: Configurar el Cómputo Económico
 En el menú lateral izquierdo:
-1. Ir a **Administrar** > **Cómputo** (o *Compute*) > pestaña **Clústeres de proceso** (o *Compute clusters*).
-2. Hacer clic en **Nuevo** (o *+ Crear*):
-   * **Nombre del proceso:** `cluster-credit-risk`
-   * **Tamaño de máquina virtual:** `Standard_DS2_v2` (o `Standard_DS11_v2`, 2 núcleos)
-   * **Número mínimo de nodos:** **`0`** *(OBLIGATORIO: para que cueste $0 cuando esté inactivo)*
-   * **Número máximo de nodos:** **`1`**
-   * **Segundos de inactividad antes de reducir verticalmente:** **`120`**
+1. Ir a **Administrar** > **Proceso** > pestaña **Clústeres de proceso**.
+2. Hacer clic en **+ Nuevo** (o *Crear*):
+   * **Paso 1 (Máquina virtual):**
+     * Ubicación: `West US`
+     * Nivel de máquina virtual: `Dedicado`
+     * Tipo de máquina virtual: `CPU`
+     * Tamaño: Seleccionar `Standard_DS11_v2` (2 núcleos, 14 GB RAM, 0.18 USD/h)
+     * Clic en **Siguiente**.
+   * **Paso 2 (Configuración avanzada):**
+     * Nombre del proceso: `cluster-credit-risk`
+     * Número mínimo de nodos: **`0`** *(OBLIGATORIO: para que el costo sea $0.00 cuando esté inactivo)*
+     * Número máximo de nodos: **`1`**
+     * Segundos de inactividad antes de la reducción vertical: **`120`**
 3. Clic en **Crear**.
 
 #### Paso 2: Cargar el Dataset (Datos)

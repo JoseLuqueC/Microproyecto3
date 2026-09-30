@@ -175,13 +175,19 @@ Al ingresar por primera vez a [ml.azure.com](https://ml.azure.com) sin un área 
 5. Hacer clic en **Crear** (toma entre 1 y 2 minutos). Al finalizar, el sistema ingresará automáticamente al área de trabajo y se habilitará el menú completo de opciones en el lateral izquierdo (**Creación**, **Recursos** y **Administrar**).
 
 #### Paso 1: Configurar el Cómputo Económico
-1. En el menú lateral izquierdo, navegar a **Administrar** > **Cómputo** (o *Compute*) > pestaña **Clústeres de proceso** (o *Compute clusters*).
-2. Hacer clic en **Nuevo** (o *+ Crear*):
-   * *Nombre del proceso:* `cluster-credit-risk`
-   * *Tamaño de máquina virtual:* `Standard_DS2_v2` (o `Standard_DS11_v2`, 2 vCPUs)
-   * *Número mínimo de nodos:* **`0`** *(OBLIGATORIO para no gastar crédito cuando esté inactivo)*
-   * *Número máximo de nodos:* **`1`**
-   * *Segundos de inactividad antes de reducir:* **`120`**
+1. En el menú lateral izquierdo, navegar a **Administrar** > **Proceso** > pestaña **Clústeres de proceso**.
+2. Hacer clic en **+ Nuevo** (o *Crear*):
+   * **Paso 1 (Máquina virtual):**
+     * Ubicación: `West US`
+     * Nivel de máquina virtual: `Dedicado`
+     * Tipo de máquina virtual: `CPU`
+     * Tamaño: Seleccionar `Standard_DS11_v2` (2 núcleos, 14 GB RAM, 0.18 USD/h)
+     * Clic en **Siguiente**.
+   * **Paso 2 (Configuración avanzada):**
+     * Nombre del proceso: `cluster-credit-risk`
+     * Número mínimo de nodos: **`0`** *(OBLIGATORIO para que el costo sea $0.00 cuando esté inactivo)*
+     * Número máximo de nodos: **`1`**
+     * Segundos de inactividad antes de la reducción vertical: **`120`**
 3. Clic en **Crear**.
 
 #### Paso 2: Crear el Data Asset
