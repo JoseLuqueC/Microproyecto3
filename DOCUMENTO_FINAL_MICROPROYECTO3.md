@@ -2,6 +2,10 @@
 
 **Asignatura:** Computación en la Nube  
 **Docente:** Prof. Oscar H. Mondragón  
+**Integrantes del Equipo:**  
+* Julio Cesar Rosero Porras  
+* Karoll Dahian Ramirez Marulanda  
+* Jose Fernando Luque Cajiao  
 **Caso de Estudio:** Evaluación y Clasificación de Riesgo Crediticio (*Credit Risk Assessment*)  
 **Empresa Ficticia:** Banco Digital PrestaAndina S.A.  
 **Plataforma Cloud:** Microsoft Azure (Azure Machine Learning Studio / Designer)  
@@ -319,19 +323,19 @@ flowchart TD
 
 La sustentación está dividida en tres bloques de 5 minutos por integrante:
 
-### Minuto 00:00 - 05:00: Integrante 1 (Negocio, Requerimientos y Costos)
+### Minuto 00:00 - 05:00: Integrante 1 - Julio Cesar Rosero Porras (Negocio, Requerimientos y Costos)
 * **Diapositiva 1:** Portada, integrantes y presentación de la FinTech *Banco PrestaAndina*.
 * **Diapositiva 2:** La problemática de negocio: cartera vencida del 14.8%, tiempos lentos y necesidad de decisiones en tiempo real.
 * **Diapositiva 3:** Requerimientos técnicos y restricciones (seguridad, latencia < 2.5s y límite presupuestal de $50 USD).
 * **Diapositiva 4:** Comparativa de alternativas (¿Por qué Azure ML PaaS y no IaaS manual?) y cálculo formal en Azure Pricing Calculator (~$1.94 USD de consumo).
 
-### Minuto 05:00 - 10:00: Integrante 2 (Arquitectura Cloud y Modelado ML)
+### Minuto 05:00 - 10:00: Integrante 2 - Karoll Dahian Ramirez Marulanda (Arquitectura Cloud y Modelado ML)
 * **Diapositiva 5:** Diagrama de arquitectura de componentes en Azure y flujo de datos.
 * **Diapositiva 6:** Explicación del Pipeline en Azure ML Designer (ingesta, preprocesamiento y separación 70/30).
 * **Diapositiva 7:** Justificación del algoritmo (*Two-Class Boosted Decision Tree*) frente a modelos lineales.
 * **Diapositiva 8:** Resultados de evaluación en Azure ML: Curva ROC, AUC (0.80+) y Matriz de Confusión.
 
-### Minuto 10:00 - 15:00: Integrante 3 (MLOps, DEMO en Vivo y Conclusiones)
+### Minuto 10:00 - 15:00: Integrante 3 - Jose Fernando Luque Cajiao (MLOps, DEMO en Vivo y Conclusiones)
 * **Diapositiva 9:** Despliegue del Real-Time Endpoint, arquitectura de servicio y seguridad.
 * **DEMO EN VIVO (Pantalla Compartida):**
   1. Mostrar el Endpoint activo y con estado "Healthy" en Azure ML Studio.

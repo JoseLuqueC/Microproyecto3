@@ -61,6 +61,6 @@ python scripts/test_endpoint.py
 ---
 
 ## 👥 Integrantes del Equipo
-* Integrante 1: [Nombre / Correo Institucional]
-* Integrante 2: [Nombre / Correo Institucional]
-* Integrante 3: Jose Luque ([@JoseLuqueC](https://github.com/JoseLuqueC))
+* **Julio Cesar Rosero Porras**
+* **Karoll Dahian Ramirez Marulanda**
+* **Jose Fernando Luque Cajiao** ([@JoseLuqueC](https://github.com/JoseLuqueC))
