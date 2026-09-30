@@ -190,50 +190,50 @@ Al ingresar por primera vez a [ml.azure.com](https://ml.azure.com) sin un área 
      * Segundos de inactividad antes de la reducción vertical: **`120`**
 3. Clic en **Crear**.
 
-#### Paso 2: Crear el Data Asset
-1. Ir a **Data** > **Data assets** > **Create**.
-2. *Name:* `german-credit-risk`
-3. *Type:* **Tabular**
-4. *Source:* **From local files** > Cargar el archivo `german_credit_risk.csv` generado.
-5. Confirmar que la columna `CreditRisk` sea detectada como tipo String/Categorical (`Good` y `Bad`).
+#### Paso 2: Cargar el Dataset (Datos)
+1. En el menú lateral izquierdo, ir a **Recursos** > **Datos**.
+2. Pestaña **Recursos de datos** > clic en el botón azul **+ Crear**:
+   * **1. Tipo de datos:** Nombre: `german-credit-risk`, Tipo: **Tabular** -> *Siguiente*.
+   * **2. Origen de datos:** Seleccionar **De archivos locales** -> *Siguiente*.
+   * **3. Tipo de almacenamiento de destino:** Dejar seleccionado `workspaceblobstore` -> *Siguiente*.
+   * **4. Selección de archivos:** Clic en **Examinar** > **Cargar archivos** > seleccionar `data/german_credit_risk.csv` -> *Siguiente*.
+   * **5. Configuración:** Delimitador: Coma (`,`), Encabezados: **Solo el primer archivo tiene encabezados** -> *Siguiente*.
+   * **6. Esquema:** Verificar columnas detectadas (CheckingAccount, DurationMonths, ..., CreditRisk) -> *Siguiente*.
+   * **7. Revisar:** Clic en **Crear**.
 
-#### Paso 3: Construcción del Pipeline en Azure ML Designer
-1. Ir a **Designer** > **Create a new pipeline using classic prebuilt components**.
-2. Arrastrar y conectar los módulos en el siguiente orden estricto:
-
-```
-                  [ german-credit-risk ] (Data Asset)
-                             │
-                             ▼
-               [ Select Columns in Dataset ]
-           (Seleccionar todas excepto ruidos no deseados)
-                             │
-                             ▼
-                   [ Clean Missing Data ]
-             (Modo: Custom substitution value o Mean)
-                             │
-                             ▼
-                       [ Split Data ]
-      (Splitting mode: Split Rows, Fraction: 0.7, Seed: 42)
-             │                                    │
-    (Salida 1: 70% Train)                (Salida 2: 30% Test)
-             │                                    │
-             ▼                                    │
-      [ Train Model ] ◄── [ Two-Class Boosted ]   │
-      (Target: CreditRisk) [   Decision Tree   ]  │
-             │                                    │
-             └─────────────────┬──────────────────┘
-                               │
-                               ▼
-                        [ Score Model ]
-                               │
-                               ▼
-                       [ Evaluate Model ]
-```
-
-3. En los ajustes de la tubería (engranaje superior derecho), asignar como destino de cómputo el clúster `cluster-credit-risk`.
-4. Hacer clic en **Submit**, asignar el experimento `exp-credit-risk-v1` y dar clic en **Submit**.
-5. Esperar de 4 a 6 minutos hasta que todos los bloques queden con check verde.
+#### Paso 3: Construcción del Pipeline en el Diseñador (Designer)
+1. En el menú izquierdo (**Creación**), hacer clic en **Diseñador**.
+2. Seleccionar **Crear una nueva canalización con componentes clásicos compilados previamente**.
+3. En la barra izquierda del lienzo, ir a la pestaña **Datos** y arrastrar **`german-credit-risk`** al centro del lienzo.
+4. Cambiar a la pestaña **Componente** (al lado de Datos) y arrastrar y conectar los siguientes 6 módulos:
+   * **Select Columns in Dataset:**
+     * Conectar la salida de `german-credit-risk` a su entrada.
+     * En el panel derecho > *Editar columna* > Regla: *Con reglas* > Menú desplegable: **Todas las columnas** (o *All columns*) -> Guardar.
+   * **Clean Missing Data:**
+     * Conectar la salida de `Select Columns in Dataset` a su entrada.
+     * En el panel derecho > *Columns to be cleaned* > *Editar columna* > Seleccionar **Todas las columnas** -> Guardar.
+   * **Split Data:**
+     * Conectar la salida izquierda (Dataset limpio) de `Clean Missing Data` a su entrada.
+     * En el panel derecho: *Fraction of rows*: `0.7`, *Random seed*: `42`.
+   * **Two-Class Boosted Decision Tree:**
+     * Arrastrar al lienzo (a la izquierda de Train Model).
+   * **Train Model:**
+     * Entrada izquierda (Untrained model): Conectar la salida de `Two-Class Boosted Decision Tree`.
+     * Entrada derecha (Dataset): Conectar la salida izquierda (70% Train) de `Split Data`.
+     * En el panel derecho > *Editar columna* (Label column) > Seleccionar **`CreditRisk`** -> Guardar.
+   * **Score Model:**
+     * Entrada izquierda: Conectar la salida de `Train Model`.
+     * Entrada derecha: Conectar la salida derecha (30% Test) de `Split Data`.
+   * **Evaluate Model:**
+     * Entrada izquierda: Conectar la salida de `Score Model`.
+5. **Configuración y Envío (Botón 'Configurar y enviar'):**
+   * Cambiar el nombre del pipeline arriba a la izquierda a: `Pipeline-Credit-Risk-Evaluation`.
+   * Clic en el botón azul superior **Configurar y enviar** (*Configure & submit*).
+   * **Paso 1 (Datos básicos):** Seleccionar *Crear nuevo* -> Nombre: `exp-credit-risk` -> *Siguiente*.
+   * **Paso 2 (Entradas y salidas):** Dejar por defecto -> *Siguiente*.
+   * **Paso 3 (Parámetros de ejecución):** En *Proceso predeterminado*, seleccionar el clúster: `cluster-credit-risk` -> *Siguiente*.
+   * **Paso 4 (Revisar y enviar):** Verificar el resumen y hacer clic en el botón azul **Enviar** (*Submit*).
+   * El entrenamiento tomará entre 3 y 5 minutos. El clúster encenderá 1 nodo, ejecutará todos los pasos y al finalizar volverá a 0 nodos automáticamente.
 
 #### Paso 4: Análisis de Resultados del Modelo
 1. Hacer clic derecho sobre el módulo **Evaluate Model** > **Preview data** > **Evaluation results**.

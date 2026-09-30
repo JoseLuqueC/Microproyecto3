@@ -64,22 +64,49 @@ En el menú lateral izquierdo:
 3. Clic en **Crear**.
 
 #### Paso 2: Cargar el Dataset (Datos)
-1. En el menú lateral izquierdo, ir a **Recursos** > **Datos** (o *Data*).
-2. Pestaña **Recursos de datos** > clic en **+ Crear**:
-   * **Nombre:** `german-credit-risk`
-   * **Tipo:** **Tabular**
-   * **Origen:** *De archivos locales* > Subir `data/german_credit_risk.csv`.
-   * Verificar que la columna `CreditRisk` tenga valores `Good` y `Bad`.
+1. En el menú lateral izquierdo, ir a **Recursos** > **Datos**.
+2. Pestaña **Recursos de datos** > clic en el botón azul **+ Crear**:
+   * **1. Tipo de datos:** Nombre: `german-credit-risk`, Tipo: **Tabular** -> *Siguiente*.
+   * **2. Origen de datos:** Seleccionar **De archivos locales** -> *Siguiente*.
+   * **3. Tipo de almacenamiento de destino:** Dejar seleccionado `workspaceblobstore` -> *Siguiente*.
+   * **4. Selección de archivos:** Clic en **Examinar** > **Cargar archivos** > seleccionar `data/german_credit_risk.csv` -> *Siguiente*.
+   * **5. Configuración:** Delimitador: Coma (`,`), Encabezados: **Solo el primer archivo tiene encabezados** -> *Siguiente*.
+   * **6. Esquema:** Verificar columnas detectadas (CheckingAccount, DurationMonths, ..., CreditRisk) -> *Siguiente*.
+   * **7. Revisar:** Clic en **Crear**.
 
 #### Paso 3: Construcción del Pipeline en el Diseñador (Designer)
-1. En el menú izquierdo, ir a **Creación** > **Diseñador** (o *Designer*).
+1. En el menú izquierdo (**Creación**), hacer clic en **Diseñador**.
 2. Seleccionar **Crear una nueva canalización con componentes clásicos compilados previamente**.
-3. Arrastrar y conectar los módulos:
-   * `german-credit-risk` -> `Select Columns in Dataset` -> `Clean Missing Data` -> `Split Data` (0.7 / 0.3).
-   * Conectar la partición 1 (70%) a `Train Model` junto con `Two-Class Boosted Decision Tree`.
-   * Conectar `Train Model` a `Score Model` junto con la partición 2 (30%).
-   * Conectar `Score Model` a `Evaluate Model`.
-4. En la configuración de la canalización, asignar como destino de cómputo `cluster-credit-risk` y hacer clic en **Enviar** (*Submit*).
+3. En la barra izquierda del lienzo, ir a la pestaña **Datos** y arrastrar **`german-credit-risk`** al centro del lienzo.
+4. Cambiar a la pestaña **Componente** (al lado de Datos) y arrastrar y conectar los siguientes 6 módulos:
+   * **Select Columns in Dataset:**
+     * Conectar la salida de `german-credit-risk` a su entrada.
+     * En el panel derecho > *Editar columna* > Incluir todas las columnas.
+   * **Clean Missing Data:**
+     * Conectar la salida de `Select Columns in Dataset` a su entrada.
+     * Cleaning mode: *Replace with mean* (o sustitución personalizada).
+   * **Split Data:**
+     * Conectar la salida izquierda (Dataset limpio) de `Clean Missing Data` a su entrada.
+     * En el panel derecho: *Fraction of rows*: `0.7`, *Random seed*: `42`.
+   * **Two-Class Boosted Decision Tree:**
+     * Arrastrar al lienzo (a la izquierda de Train Model).
+   * **Train Model:**
+     * Entrada izquierda (Untrained model): Conectar la salida de `Two-Class Boosted Decision Tree`.
+     * Entrada derecha (Dataset): Conectar la salida izquierda (70% Train) de `Split Data`.
+     * En el panel derecho > *Editar columna* (Label column) > Seleccionar **`CreditRisk`**.
+   * **Score Model:**
+     * Entrada izquierda: Conectar la salida de `Train Model`.
+     * Entrada derecha: Conectar la salida derecha (30% Test) de `Split Data`.
+   * **Evaluate Model:**
+     * Entrada izquierda: Conectar la salida de `Score Model`.
+5. **Configuración y Envío (Botón 'Configurar y enviar'):**
+   * Cambiar el nombre del pipeline arriba a la izquierda a: `Pipeline-Credit-Risk-Evaluation`.
+   * Clic en el botón azul superior **Configurar y enviar** (*Configure & submit*).
+   * **Paso 1 (Datos básicos):** Seleccionar *Crear nuevo* -> Nombre: `exp-credit-risk` -> *Siguiente*.
+   * **Paso 2 (Entradas y salidas):** Dejar por defecto -> *Siguiente*.
+   * **Paso 3 (Parámetros de ejecución):** En *Proceso predeterminado*, seleccionar el clúster: `cluster-credit-risk` -> *Siguiente*.
+   * **Paso 4 (Revisar y enviar):** Verificar el resumen y hacer clic en el botón azul **Enviar** (*Submit*).
+   * El entrenamiento tomará entre 3 y 5 minutos. El clúster encenderá 1 nodo, ejecutará todos los pasos y al finalizar volverá a 0 nodos automáticamente.
 
 #### Paso 4: Despliegue del Punto de Conexión (Endpoint)
 1. En la parte superior de la canalización completada, hacer clic en **Crear canalización de inferencia** > **Canalización de inferencia en tiempo real** -> **Enviar**.
