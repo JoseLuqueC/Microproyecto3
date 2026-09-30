@@ -42,8 +42,8 @@ Si al ingresar a [ml.azure.com](https://ml.azure.com) ves la pantalla de bienven
 2. **Nombre descriptivo:** `Riesgo Crediticio PrestaAndina`
 3. **Configuración avanzada:**
    * **Suscripción:** `Azure for Students`
-   * **Grupo de recursos:** `rg-credit-risk-ia` (puedes hacer clic en *Crear nuevo*)
-   * **Región:** `East US 2` (o `East US`)
+   * **Grupo de recursos:** `rg-credit-risk-westus` (dar clic en *Crear nuevo*)
+   * **Región:** **`West US`** (o **`North Central US`**) *(OBLIGATORIO: la política de Azure for Students restringe la creación únicamente a estas regiones en EE. UU.)*
 4. Hacer clic en **Crear** (tarda ~1 a 2 minutos). Al terminar, entrarás al área de trabajo y se desbloqueará el menú completo de la izquierda (**Creación**, **Recursos** y **Administrar**).
 
 #### Paso 1: Configurar el Cómputo Económico

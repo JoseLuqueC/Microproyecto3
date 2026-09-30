@@ -170,8 +170,8 @@ Al ingresar por primera vez a [ml.azure.com](https://ml.azure.com) sin un área 
 3. **Centro:** Dejar por defecto o seleccionar el sugerido (opcional).
 4. **Configuración avanzada:**
    * **Suscripción:** `Azure for Students`
-   * **Grupo de recursos:** `rg-credit-risk-ia` (dar clic en *Crear nuevo* o usar el predeterminado)
-   * **Región:** `East US 2` (o `East US`)
+   * **Grupo de recursos:** `rg-credit-risk-westus` (dar clic en *Crear nuevo*)
+   * **Región:** **`West US`** (o **`North Central US`**) *(Políticas de Azure for Students habilitan específicamente estas regiones)*
 5. Hacer clic en **Crear** (toma entre 1 y 2 minutos). Al finalizar, el sistema ingresará automáticamente al área de trabajo y se habilitará el menú completo de opciones en el lateral izquierdo (**Creación**, **Recursos** y **Administrar**).
 
 #### Paso 1: Configurar el Cómputo Económico
