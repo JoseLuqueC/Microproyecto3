@@ -163,16 +163,26 @@ flowchart TD
 
 ### 3.1. Guía de Ejecución Paso a Paso en Azure ML Studio (Para los 3 Integrantes)
 
-#### Paso 1: Configurar el Workspace y Cómputo
-1. Ingresar a [ml.azure.com](https://ml.azure.com) con la cuenta de Azure for Students.
-2. En el menú izquierdo, seleccionar **Manage** > **Compute** > pestaña **Compute clusters**.
-3. Hacer clic en **New**:
-   * *Compute name:* `cluster-credit-risk`
-   * *VM size:* `Standard_DS2_v2`
-   * *Minimum number of nodes:* **`0`** *(OBLIGATORIO para no gastar crédito)*
-   * *Maximum number of nodes:* **`1`**
-   * *Idle seconds before scale down:* **`120`**
-4. Clic en **Create**.
+#### Paso 0: Crear la primera "Área de trabajo" (Workspace)
+Al ingresar por primera vez a [ml.azure.com](https://ml.azure.com) sin un área de trabajo previa, Azure muestra la pantalla *"Bienvenidos al Estudio de Azure Machine Learning: Cree una nueva área de trabajo para empezar a usar Azure ML"*. Completar el formulario con:
+1. **Nombre:** `mlw-prestaandina` (o `mlw-credit-risk`)
+2. **Nombre descriptivo:** `Riesgo Crediticio PrestaAndina`
+3. **Centro:** Dejar por defecto o seleccionar el sugerido (opcional).
+4. **Configuración avanzada:**
+   * **Suscripción:** `Azure for Students`
+   * **Grupo de recursos:** `rg-credit-risk-ia` (dar clic en *Crear nuevo* o usar el predeterminado)
+   * **Región:** `East US 2` (o `East US`)
+5. Hacer clic en **Crear** (toma entre 1 y 2 minutos). Al finalizar, el sistema ingresará automáticamente al área de trabajo y se habilitará el menú completo de opciones en el lateral izquierdo (**Creación**, **Recursos** y **Administrar**).
+
+#### Paso 1: Configurar el Cómputo Económico
+1. En el menú lateral izquierdo, navegar a **Administrar** > **Cómputo** (o *Compute*) > pestaña **Clústeres de proceso** (o *Compute clusters*).
+2. Hacer clic en **Nuevo** (o *+ Crear*):
+   * *Nombre del proceso:* `cluster-credit-risk`
+   * *Tamaño de máquina virtual:* `Standard_DS2_v2` (o `Standard_DS11_v2`, 2 vCPUs)
+   * *Número mínimo de nodos:* **`0`** *(OBLIGATORIO para no gastar crédito cuando esté inactivo)*
+   * *Número máximo de nodos:* **`1`**
+   * *Segundos de inactividad antes de reducir:* **`120`**
+3. Clic en **Crear**.
 
 #### Paso 2: Crear el Data Asset
 1. Ir a **Data** > **Data assets** > **Create**.

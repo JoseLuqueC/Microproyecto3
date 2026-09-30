@@ -34,22 +34,52 @@ git clone https://github.com/JoseLuqueC/Microproyecto3.git
 cd Microproyecto3
 ```
 
-### 2. Configurar en Azure Machine Learning Studio
-1. Ingresar a [ml.azure.com](https://ml.azure.com).
-2. **Cómputo:** En **Manage** > **Compute** > **Compute clusters**, crear un clúster llamado `cluster-credit-risk`:
-   * Tamaño: `Standard_DS2_v2`
-   * Nodos mínimos: **`0`** *(OBLIGATORIO para evitar cargos cuando esté inactivo)*
-   * Nodos máximos: **`1`**
-   * Segundos de inactividad antes de escalar a cero: **`120`**
-3. **Datos:** En **Data** > **Data assets** > **Create**, subir `data/german_credit_risk.csv` como dataset **Tabular**.
-4. **Pipeline en Designer:** Ir a **Designer** > Crear pipeline clásico conectando:
+### 2. Configurar en Azure Machine Learning Studio (Interfaz en Español)
+
+#### Paso 0: Crear la primera "Área de trabajo" (Workspace)
+Si al ingresar a [ml.azure.com](https://ml.azure.com) ves la pantalla de bienvenida solicitando crear una nueva área de trabajo:
+1. **Nombre:** `mlw-prestaandina` (o `mlw-credit-risk`)
+2. **Nombre descriptivo:** `Riesgo Crediticio PrestaAndina`
+3. **Configuración avanzada:**
+   * **Suscripción:** `Azure for Students`
+   * **Grupo de recursos:** `rg-credit-risk-ia` (puedes hacer clic en *Crear nuevo*)
+   * **Región:** `East US 2` (o `East US`)
+4. Hacer clic en **Crear** (tarda ~1 a 2 minutos). Al terminar, entrarás al área de trabajo y se desbloqueará el menú completo de la izquierda (**Creación**, **Recursos** y **Administrar**).
+
+#### Paso 1: Configurar el Cómputo Económico
+En el menú lateral izquierdo:
+1. Ir a **Administrar** > **Cómputo** (o *Compute*) > pestaña **Clústeres de proceso** (o *Compute clusters*).
+2. Hacer clic en **Nuevo** (o *+ Crear*):
+   * **Nombre del proceso:** `cluster-credit-risk`
+   * **Tamaño de máquina virtual:** `Standard_DS2_v2` (o `Standard_DS11_v2`, 2 núcleos)
+   * **Número mínimo de nodos:** **`0`** *(OBLIGATORIO: para que cueste $0 cuando esté inactivo)*
+   * **Número máximo de nodos:** **`1`**
+   * **Segundos de inactividad antes de reducir verticalmente:** **`120`**
+3. Clic en **Crear**.
+
+#### Paso 2: Cargar el Dataset (Datos)
+1. En el menú lateral izquierdo, ir a **Recursos** > **Datos** (o *Data*).
+2. Pestaña **Recursos de datos** > clic en **+ Crear**:
+   * **Nombre:** `german-credit-risk`
+   * **Tipo:** **Tabular**
+   * **Origen:** *De archivos locales* > Subir `data/german_credit_risk.csv`.
+   * Verificar que la columna `CreditRisk` tenga valores `Good` y `Bad`.
+
+#### Paso 3: Construcción del Pipeline en el Diseñador (Designer)
+1. En el menú izquierdo, ir a **Creación** > **Diseñador** (o *Designer*).
+2. Seleccionar **Crear una nueva canalización con componentes clásicos compilados previamente**.
+3. Arrastrar y conectar los módulos:
    * `german-credit-risk` -> `Select Columns in Dataset` -> `Clean Missing Data` -> `Split Data` (0.7 / 0.3).
-   * Conectar la partición de entrenamiento a `Train Model` con `Two-Class Boosted Decision Tree`.
-   * Conectar a `Score Model` y luego a `Evaluate Model`.
-   * Asignar el clúster de cómputo y dar clic en **Submit**.
-5. **Despliegue del Endpoint:**
-   * Clic en **Create inference pipeline** > **Real-time inference pipeline** -> **Submit**.
-   * Clic en **Deploy** -> Nombre: `endpoint-credit-risk` -> Cómputo: `Managed` (`Standard_DS2_v2`).
+   * Conectar la partición 1 (70%) a `Train Model` junto con `Two-Class Boosted Decision Tree`.
+   * Conectar `Train Model` a `Score Model` junto con la partición 2 (30%).
+   * Conectar `Score Model` a `Evaluate Model`.
+4. En la configuración de la canalización, asignar como destino de cómputo `cluster-credit-risk` y hacer clic en **Enviar** (*Submit*).
+
+#### Paso 4: Despliegue del Punto de Conexión (Endpoint)
+1. En la parte superior de la canalización completada, hacer clic en **Crear canalización de inferencia** > **Canalización de inferencia en tiempo real** -> **Enviar**.
+2. Al finalizar, hacer clic en **Implementar** (*Deploy*):
+   * **Nombre:** `endpoint-credit-risk`
+   * **Tipo de proceso:** `Administrado` (*Managed*) con VM `Standard_DS2_v2`.
 
 ### 3. Probar el DEMO
 Una vez desplegado el endpoint, se puede probar desde la pestaña **Test** de Azure ML Studio o ejecutando:
