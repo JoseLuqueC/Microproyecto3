@@ -18,8 +18,6 @@ Repositorio para el desarrollo y entrega del **Microproyecto 3** de la asignatur
 │   ├── payload_buen_cliente.json       # JSON de prueba: Perfil de bajo riesgo (Aprobado)
 │   ├── payload_mal_cliente.json        # JSON de prueba: Perfil de alto riesgo (Rechazado)
 │   └── test_endpoint.py                # Cliente Python para probar el Endpoint REST de Azure ML
-├── PRESENTACION_MICROPROYECTO3.pdf     # Diapositivas oficiales en PDF (10 diapositivas, 16:9)
-├── PRESENTACION_MICROPROYECTO3.pptx    # Presentación editable en PowerPoint (16:9 widescreen)
 ├── DOCUMENTO_FINAL_MICROPROYECTO3.md   # Informe técnico formal con los 4 criterios de evaluación
 └── README.md
 ```
